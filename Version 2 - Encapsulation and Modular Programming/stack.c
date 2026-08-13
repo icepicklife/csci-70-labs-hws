@@ -3,7 +3,7 @@
 #define MAX 100
 
 static char Store[MAX];
-static int top = 0;
+int top = 0;
 
 void push(char x){
     if(top < MAX){
