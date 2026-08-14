@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "stack.h "
+#include "stack.h"
 
 #define MAX_STACKS 10
 #define MAX 100
