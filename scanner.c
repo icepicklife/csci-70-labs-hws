@@ -41,15 +41,72 @@ void scanOperationsFile(FILE *inputList, FILE *outputList) {
 
         switch (currentState) {
             case A_state:
-                /* code */
+
+                if (isspace(c)) {
+                    currentState = A_state;
+                } else if (isdigit(c)){
+
+                    Opstring[Op_index++] = c;
+                    currentState = B_state;
+
+                } else if (c == '='){
+
+                    currentState = E_state;
+
+                } else if (c == '+'){
+                    
+                    fprintf(outputList, "PLUS\t+\n");
+                    currentState = A_state;
+
+                } else if ( c == '-') {
+
+                    fprintf(outputList, "MINUS\t-\n");
+                    currentState = A_state;
+
+                } else {
+
+                    fprintf(outputList, "Lexical Error reading character \"%c\"\n", c);
+                    currentState = A_state;
+
+                }
                 break;
 
             case B_state:
-                /* code */
+                
+                if (isdigit(c)) {
+
+                    if (Op_index < 255) {
+                        Opstring[Op_index++] = c;
+                    }
+
+                } else {
+
+                    Opstring[Op_index] = '\0';
+                    fprintf(outputList, "NUM\t%s\n", Opstring);
+
+                    Op_index = 0;
+
+                    ungetc(c, inputList);
+                    currentState = A_state;
+
+                }
                 break;
 
             case E_state:
-                /* code */
+                
+                if (c == '='){
+
+                    fprintf(outputList, "ASSIGN\t==\n");
+                    currentState = A_state;
+
+                } else {
+
+                    fprintf(outputList, "Lexical Error reading character \"%c\"\n", c);
+
+                    ungetc(c, inputList);
+                    currentState = A_state;
+
+                }
                 break;
 
             default:
