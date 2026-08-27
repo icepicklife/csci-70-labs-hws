@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-#include <windows.h>
+#include <dirent.h>
 
 typedef enum {
     A_state,
@@ -130,5 +130,41 @@ void generateOutputList(const char *inputName, char *outputName) {
 
 int main() {
 
+    DIR *dir;
+    struct dirent *ent;
+
+    if ((dir = opendir(".")) != NULL) {
+
+        while ((ent = readdir(dir)) != NULL) {
+
+            if (strstr(ent->d_name, "input") != NULL && strstr(ent->d_name, ".txt")) {
+
+                char outputFilename[256];
+                generateOutputList(ent->d_name, outputFilename);
+
+                FILE *inFile = fopen(ent->d_name, "r");
+                FILE *outFile = fopen(outputFilename, "w");
+
+                if (inFile && outFile) {
+
+                    printf("Processing %s -> %s\n", ent->d_name, outputFilename);
+                    scanFile(inFile, outFile);
+                    fclose(inFile);
+                    fclose(outFile);
+
+                } else {
+                    printf("Error opening files for %s\n", ent->d_name);
+                }
+            }
+        }
+
+        closedir(dir);
+
+    } else {
+
+        perror("Could not open directory");
+        return EXIT_FAILURE;
+        
+    }
     return EXIT_SUCCESS;
 }
