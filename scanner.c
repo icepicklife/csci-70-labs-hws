@@ -121,7 +121,7 @@ void generateOutputList(const char *inputName, char *outputName) {
     if (match) {
         int prefix_len = match - inputName;
         strncpy(outputName, inputName, prefix_len);
-        outputName[prefix_len] = "\0";
+        outputName[prefix_len] = '\0';
         strcat(outputName, "output");
         strcat(outputName, match + strlen("input"));
     }
@@ -148,7 +148,7 @@ int main() {
                 if (inFile && outFile) {
 
                     printf("Processing %s -> %s\n", ent->d_name, outputFilename);
-                    scanFile(inFile, outFile);
+                    scanOperationsFile(inFile, outFile);
                     fclose(inFile);
                     fclose(outFile);
 
@@ -164,7 +164,7 @@ int main() {
 
         perror("Could not open directory");
         return EXIT_FAILURE;
-        
+
     }
     return EXIT_SUCCESS;
 }
