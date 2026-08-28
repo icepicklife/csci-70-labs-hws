@@ -28,7 +28,7 @@ void scanOperationsFile(FILE *inputList, FILE *outputList) {
             if (currentState == B_state)
             {
                 Opstring[Op_index] = '\0';
-                fprintf(outputList, "NUM\t%s\n", Opstring);
+                fprintf(outputList, "NUM\t\t%s\n", Opstring);
             }
 
             else if (currentState == E_state)
@@ -82,7 +82,7 @@ void scanOperationsFile(FILE *inputList, FILE *outputList) {
                 } else {
 
                     Opstring[Op_index] = '\0';
-                    fprintf(outputList, "NUM\t%s\n", Opstring);
+                    fprintf(outputList, "NUM\t\t%s\n", Opstring);
 
                     Op_index = 0;
 
