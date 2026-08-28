@@ -66,7 +66,7 @@ void scanOperationsFile(FILE *inputList, FILE *outputList) {
                 } else {
 
                     fprintf(outputList, "Lexical Error reading character \"%c\"\n", c);
-                    currentState = A_state;
+                    return;
 
                 }
                 break;
@@ -103,8 +103,7 @@ void scanOperationsFile(FILE *inputList, FILE *outputList) {
 
                     fprintf(outputList, "Lexical Error reading character \"%c\"\n", c);
 
-                    ungetc(c, inputList);
-                    currentState = A_state;
+                    return;
 
                 }
                 break;
